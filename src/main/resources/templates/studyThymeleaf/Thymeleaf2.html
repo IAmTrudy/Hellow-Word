@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:inline="javascript">
+        var user = /*[[${hello}]]*/ {};
+        var age = /*[[${hello.name}]]*/ 20;
+        console.log(user);
+        console.log(age)
+    </script>
+</head>
+<body>
+    <h1 th:object="${hello}">
+        你好：<span th:text="*{name}">别走</span>
+    </h1>
+    <h1>
+        你好：<span th:text="${hello.name}">别走</span>
+    </h1>
+    <p>
+        你正在观看 <span th:text="'thymeleaf'">template</span> 的字符串常量值.
+    </p>
+    <div th:if="true">
+        你填的是true
+    </div>
+    <span th:text="'欢迎:' + ${hello.name} + '!'"></span>
+    <br>
+    <table>
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>生日</th>
+        </tr>
+        <tr th:each="hello : ${hellos}">
+            <td th:text="${helloStat.count}">序号</td>
+            <td th:text="${hello.name}">姓名</td>
+            <td th:text="${hello.age}">年龄</td>
+            <td th:text="${#dates.format(hello.birth,'yyyy-MM-dd')}">生日</td>
+        </tr>
+    </table>
+    <div th:switch="${hello.name}">
+        <p th:case="'你要的全拿走'">用户是管理员</p>
+        <p th:case="'th'">用户是经理</p>
+        <p th:case="'ym'">用户是别的玩意</p>
+        <p th:case="*">用户是别的玩意</p>
+    </div>
+</body>
+</html>
